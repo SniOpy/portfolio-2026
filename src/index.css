@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* Design tokens — same DNA as madapes-agency.com */
+@theme {
+  --color-bg: #1c1a26;
+  --color-bg-light: #262433;
+  --color-card: rgb(255 255 255 / 0.06);
+  --color-card-strong: rgb(255 255 255 / 0.09);
+  --color-line: rgb(255 255 255 / 0.13);
+  --color-primary: #7c3aed;
+  --color-secondary: #a855f7;
+  --color-accent: #d7bdff;
+  --color-soft: #d1d1d8;
+  --color-muted: #a9a8b8;
+
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-glow: 0 0 24px rgb(124 58 237 / 0.45);
+  --shadow-card: 0 20px 40px rgb(0 0 0 / 0.35);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-fade-in: fade-in 0.35s ease-out;
+  --animate-keypress: keypress 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* A key going down then springing back, like a keyboard press */
+  @keyframes keypress {
+    0% {
+      opacity: 0;
+      transform: translateY(-0.35em) scale(0.6);
+      filter: blur(4px);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(0.06em) scale(1.08, 0.9);
+      filter: blur(0);
+    }
+    100% {
+      transform: none;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-bg font-sans text-white antialiased;
+  }
+  ::selection {
+    background: rgb(168 85 247 / 0.45);
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-secondary;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1180px] px-6;
+  }
+  .eyebrow {
+    @apply flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-accent uppercase;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 bg-secondary;
+  }
+  .glass {
+    @apply rounded-[20px] border border-line bg-card backdrop-blur-md;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  .chip {
+    @apply rounded-full border border-line bg-card-strong px-3 py-1 font-mono text-xs text-soft;
+  }
+}
+
+/*
+ * Light sections: the design tokens are CSS variables, so a section opts into
+ * the light palette by redefining them locally — components need no variant.
+ * (`--color-white` is the "ink" colour used for headings and active states.)
+ */
+.theme-light {
+  --color-bg: #f6f4fb;
+  --color-bg-light: #ffffff;
+  --color-card: rgb(255 255 255 / 0.85);
+  --color-card-strong: #ffffff;
+  --color-line: rgb(20 20 26 / 0.1);
+  --color-white: #14141a;
+  --color-soft: #474755;
+  --color-muted: #6b6b7a;
+  --color-accent: #7c3aed;
+  --shadow-card: 0 20px 40px rgb(76 29 149 / 0.08);
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  color-scheme: light;
+}
+
+/* Reveal-on-scroll primitive (driven by <Reveal />) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Split-text reveal (<SplitReveal />): words rise out of a clipping mask */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em; /* keep descenders inside the mask */
+}
+.split-inner {
+  display: inline-block;
+  transform: translateY(105%) rotate(4deg);
+  transform-origin: left bottom;
+  transition: transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(var(--i) * var(--stagger));
+}
+.split-reveal[data-visible="true"] .split-inner {
+  transform: none;
+}
+
+/* 3D tilt (useTilt): rotation + glare come from spring-driven CSS variables */
+.tilt {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+}
+.tilt-glare {
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 50%),
+    rgb(255 255 255 / 0.35),
+    transparent 45%
+  );
+  opacity: calc(var(--go, 0) * 0.55);
+  mix-blend-mode: soft-light;
+}
+
+/* Dialog content cascade (<ProjectDialog />), after the image has landed */
+.dialog-in {
+  animation: fade-in 0.5s var(--ease-out-expo) both;
+  animation-delay: calc(220ms + var(--d, 0) * 45ms);
+}
+
+/* Scroll-driven cards (<ScrollScene />): local progress derived in CSS only */
+.scroll-card {
+  --p: clamp(0, calc(var(--progress) * var(--count) - var(--i)), 1);
+  opacity: calc(0.25 + var(--p) * 0.75);
+  transform: translateY(calc((1 - var(--p)) * 32px)) scale(calc(0.92 + var(--p) * 0.08));
+  border-color: rgb(168 85 247 / calc(var(--p) * 0.6));
+}
+
+/* Accessibility: honour the OS "reduce motion" setting everywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .scroll-card,
+  .split-inner {
+    opacity: 1;
+    transform: none;
+  }
+}
