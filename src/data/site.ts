@@ -9,8 +9,8 @@ export const site = {
   agency: "https://www.madapes-agency.com",
   /** Repository of this very portfolio — shown as "View the code of this site". */
   sourceCode: "https://github.com/SniOpy/portfolio-2026",
-  /** Drop your PDF in /public with this exact name. */
-  cv: "/cv-soufiane-ibnaiche.pdf",
+  /** ATS CV in /public, one PDF per language. */
+  cv: { fr: "/cv-soufiane-ibnaiche.pdf", en: "/cv-soufiane-ibnaiche-en.pdf" },
   /** Optional: add a public contact email to show a mailto button. */
   email: "",
 } as const;
