@@ -114,16 +114,16 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
 
   return createPortal(
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-8">
-      <div ref={backdrop} aria-hidden onClick={close} className="absolute inset-0 bg-[#0d0c14]/70 backdrop-blur-md" />
+      <div ref={backdrop} aria-hidden onClick={close} className="absolute inset-0 bg-ink/60 backdrop-blur-sm" />
 
       <div
         ref={panel}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative max-h-full w-full max-w-4xl overflow-y-auto rounded-[28px] border border-line bg-bg-light shadow-card"
+        className="relative max-h-full w-full max-w-4xl overflow-y-auto rounded-xl border border-line bg-bg-light shadow-card"
       >
-        <div ref={hero} className="relative aspect-[16/9] overflow-hidden rounded-t-[28px] will-change-transform">
+        <div ref={hero} className="relative aspect-[16/9] overflow-hidden rounded-t-xl will-change-transform">
           {project.image ? (
             <img
               src={project.image}
@@ -140,7 +140,7 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
           type="button"
           onClick={close}
           aria-label={t.projects.close}
-          className="absolute top-4 right-4 grid size-10 place-items-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition-colors hover:bg-black/70"
+          className="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-ink text-bg transition-colors hover:bg-primary"
         >
           ✕
         </button>
@@ -150,7 +150,7 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
             <p data-stagger className="dialog-in font-mono text-xs text-accent" style={{ "--d": 1 } as CSSProperties}>
               {pick(project.context)} · {project.year}
             </p>
-            <h3 id={titleId} data-stagger className="dialog-in mt-2 text-3xl font-bold" style={{ "--d": 2 } as CSSProperties}>
+            <h3 id={titleId} data-stagger className="dialog-in mt-2 text-3xl font-extrabold md:text-4xl" style={{ "--d": 2 } as CSSProperties}>
               {project.name}
             </h3>
             <p data-stagger className="dialog-in mt-4 leading-relaxed text-soft" style={{ "--d": 3 } as CSSProperties}>
@@ -162,7 +162,7 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-primary to-secondary px-4 py-2.5 font-semibold text-white"
+                  className="inline-flex items-center gap-1.5 min-h-11 rounded-lg bg-primary px-4 py-2.5 font-semibold text-on-primary transition-colors hover:bg-secondary"
                 >
                   {t.projects.demo}
                   <ArrowUpRight width={16} height={16} />
@@ -173,7 +173,7 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
                   href={project.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-line px-4 py-2.5 text-soft transition-colors hover:text-white"
+                  className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-line px-4 py-2.5 text-soft transition-colors hover:border-ink hover:text-ink"
                 >
                   <GitHub width={16} height={16} />
                   {t.projects.code}
@@ -203,7 +203,7 @@ export function ProjectDialog({ project, origin, onClose }: ProjectDialogProps) 
             </ul>
             <ul data-stagger className="dialog-in mt-6 flex flex-wrap gap-1.5" style={{ "--d": 8 } as CSSProperties}>
               {project.stack.map((tech) => (
-                <li key={tech} className={cn("chip", tech in CORE_STACK && "border-secondary/50 bg-primary/15 text-accent")}>
+                <li key={tech} className={cn("chip", tech in CORE_STACK && "chip-core")}>
                   {tech}
                 </li>
               ))}

@@ -11,9 +11,8 @@ interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-gradient-to-r from-primary to-secondary text-white shadow-glow hover:brightness-110",
-  ghost: "border border-line bg-card text-white hover:border-secondary/60 hover:bg-card-strong",
+  primary: "btn-gradient text-on-primary",
+  ghost: "border border-line bg-card text-ink hover:border-primary hover:text-primary",
 };
 
 /** Link styled as a button. External links get safe `rel` automatically. */
@@ -36,7 +35,7 @@ export function ButtonLink({
       target={target}
       rel={target === "_blank" ? (rel ?? "noopener noreferrer") : rel}
       className={cn(
-        "inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-[translate,filter,background-color,border-color] duration-300 ease-out-expo",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-[translate,box-shadow,background-color,border-color] duration-200 ease-out",
         variants[variant],
         className,
       )}
