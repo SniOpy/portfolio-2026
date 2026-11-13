@@ -119,6 +119,20 @@
   background-color: var(--color-bg);
   color: var(--color-white);
   color-scheme: light;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Decorative dot grid behind light sections, fading at the top and bottom edges */
+.theme-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgb(124 58 237 / 0.3) 1.2px, transparent 1.7px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
 }
 
 /* Reveal-on-scroll primitive (driven by <Reveal />) */
