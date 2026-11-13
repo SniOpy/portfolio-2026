@@ -26,7 +26,7 @@ const tokenColor = {
 } as const;
 
 export function Hero() {
-  const { t } = useI18n();
+  const { t, pick } = useI18n();
 
   return (
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-36 pb-24 md:pt-44 lg:pb-40">
@@ -71,7 +71,7 @@ export function Hero() {
             <ButtonLink href="#projects" magnetic icon={<ArrowDown />}>
               {t.hero.ctaProjects}
             </ButtonLink>
-            <ButtonLink href={site.cv} download variant="ghost" icon={<Download />}>
+            <ButtonLink href={pick(site.cv)} download variant="ghost" icon={<Download />}>
               {t.hero.ctaCv}
             </ButtonLink>
             <ButtonLink
