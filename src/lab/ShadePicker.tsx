@@ -50,13 +50,13 @@ export function ShadePicker() {
 
       <fieldset className="w-full">
         <legend className="mb-3 w-full text-center font-mono text-xs text-muted">
-          {t.lab.shade.label} · <span className="text-white">{shade.name}</span>
+          {t.lab.shade.label} · <span className="text-ink">{shade.name}</span>
         </legend>
         <div className="relative mx-auto flex w-max gap-3">
           <span
             ref={ring}
             aria-hidden
-            className="pointer-events-none absolute top-0 left-0 size-10 rounded-full ring-2 ring-white ring-offset-2 ring-offset-bg transition-transform duration-500 ease-out-expo"
+            className="pointer-events-none absolute top-0 left-0 size-10 rounded-full ring-2 ring-ink ring-offset-2 ring-offset-bg transition-transform duration-500 ease-out-expo"
           />
           {SHADES.map((item, index) => (
             <label

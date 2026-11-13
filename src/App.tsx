@@ -1,6 +1,7 @@
 import { CursorGlow } from "./components/CursorGlow";
 import { Nav } from "./components/Nav";
 import { site } from "./data/site";
+import { useSpotlight } from "./hooks/useSpotlight";
 import { useI18n } from "./i18n/context";
 import { Contact } from "./sections/Contact";
 import { Hero } from "./sections/Hero";
@@ -12,18 +13,20 @@ import { Stack } from "./sections/Stack";
 
 export function App() {
   const { t } = useI18n();
+  useSpotlight();
 
   return (
     <>
       <a
         href="#projects"
-        className="sr-only z-[60] rounded-lg bg-primary px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        className="sr-only z-[60] rounded-lg bg-primary px-4 py-2 text-on-primary focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
       >
         {t.nav.projects}
       </a>
       <CursorGlow />
+      <div aria-hidden className="grain" />
       <Nav />
-      <main className="relative z-10">
+      <main>
         <Hero />
         <Stack />
         <Projects />
@@ -32,8 +35,8 @@ export function App() {
         <Product />
         <Contact />
       </main>
-      <footer className="relative z-10 border-t border-line py-8">
-        <div className="container-page flex flex-col items-center justify-between gap-3 text-xs text-muted md:flex-row">
+      <footer className="theme-dark border-t border-line py-8">
+        <div className="container-page flex flex-col items-start justify-between gap-3 text-xs text-muted md:flex-row md:items-center">
           <p>
             © {new Date().getFullYear()} {site.name}
           </p>

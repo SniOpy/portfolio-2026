@@ -1,6 +1,6 @@
 import { useId, useRef, useState, type CSSProperties } from "react";
-import { useTilt } from "../hooks/useTilt";
 import { CORE_STACK, type Project } from "../data/projects";
+import { useTilt } from "../hooks/useTilt";
 import { useI18n } from "../i18n/context";
 import { cn } from "../lib/cn";
 import { ArrowUpRight, GitHub } from "./icons";
@@ -31,9 +31,9 @@ function Artwork({ project, alt }: { project: Project; alt: string }) {
       }}
     >
       <div className="absolute inset-x-5 top-5 flex gap-1.5">
-        <span className="size-2 rounded-full bg-white/25" />
-        <span className="size-2 rounded-full bg-white/25" />
-        <span className="size-2 rounded-full bg-white/25" />
+        <span className="size-2 rounded-full bg-ink/15" />
+        <span className="size-2 rounded-full bg-ink/15" />
+        <span className="size-2 rounded-full bg-ink/15" />
       </div>
       <span
         aria-hidden
@@ -75,11 +75,16 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
   return (
     <article
       ref={card}
-      className="tilt group glass relative flex h-full flex-col overflow-hidden transition-[border-color,box-shadow] duration-300 hover:border-(--accent)/50 hover:shadow-card"
+      className="tilt spotlight group panel relative [--spot:var(--accent)] flex h-full flex-col overflow-hidden transition-[border-color,box-shadow] duration-300 hover:border-(--accent) hover:shadow-[0_24px_50px_-12px_color-mix(in_srgb,var(--accent)_55%,transparent)]"
       style={{ "--accent": project.accent } as CSSProperties}
       aria-labelledby={`${baseId}-title`}
     >
-      <span aria-hidden className="tilt-glare pointer-events-none absolute inset-0 z-10 rounded-[20px]" />
+      <span aria-hidden className="tilt-glare pointer-events-none absolute inset-0 z-10 rounded-xl" />
+      {/* Accent bar: grows across the top on hover */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-25 bg-(--accent) transition-transform duration-500 ease-out-expo group-hover:scale-x-100"
+      />
       <button
         ref={media}
         type="button"
@@ -91,14 +96,14 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
         )}
       >
         <Artwork project={project} alt="" />
-        <span className="absolute right-3 bottom-3 translate-y-2 rounded-full bg-black/60 px-3 py-1.5 font-mono text-xs text-white opacity-0 backdrop-blur transition-[opacity,translate] duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <span className="absolute right-3 bottom-3 translate-y-2 rounded-md bg-(--accent) px-3 py-1.5 font-mono text-xs font-semibold text-ink opacity-0 transition-[opacity,translate] duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           {t.projects.open} ↗
         </span>
       </button>
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-baseline justify-between gap-4">
-          <h3 id={`${baseId}-title`} className="text-xl font-semibold">
+          <h3 id={`${baseId}-title`} className="text-xl font-bold">
             {project.name}
           </h3>
           <span className="font-mono text-xs text-muted">{project.year}</span>
@@ -106,10 +111,10 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
         <p className="mt-1 font-mono text-xs text-accent">{pick(project.context)}</p>
 
         {/* Tabs with an indicator that slides between buttons */}
-        <div role="tablist" aria-label={project.name} className="relative mt-5 grid grid-cols-2 rounded-lg bg-white/5 p-1 text-xs">
+        <div role="tablist" aria-label={project.name} className="relative mt-5 grid grid-cols-2 rounded-lg bg-card-strong p-1 text-xs">
           <span
             aria-hidden
-            className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 transition-transform duration-300 ease-out-expo"
+            className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-md bg-card shadow-sm transition-transform duration-300 ease-out-expo"
             style={{ transform: `translateX(${activeIndex * 100}%)` }}
           />
           {tabs.map((item) => (
@@ -122,8 +127,8 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
               aria-controls={`${baseId}-panel`}
               onClick={() => setTab(item.id)}
               className={cn(
-                "relative rounded-md py-1.5 font-medium transition-colors",
-                tab === item.id ? "text-white" : "text-muted hover:text-soft",
+                "relative min-h-9 rounded-md py-1.5 font-medium transition-colors",
+                tab === item.id ? "text-ink" : "text-muted hover:text-soft",
               )}
             >
               {item.label}
@@ -157,7 +162,7 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
           {project.stack.map((tech) => (
             <li
               key={tech}
-              className={cn("chip", tech in CORE_STACK && "border-secondary/50 bg-primary/15 text-accent")}
+              className={cn("chip", tech in CORE_STACK && "chip-core")}
             >
               {tech}
             </li>
@@ -170,7 +175,7 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-medium text-white transition-colors hover:text-accent"
+              className="inline-flex items-center gap-1.5 font-medium text-ink transition-colors hover:text-accent"
             >
               {t.projects.demo}
               <ArrowUpRight width={16} height={16} />
@@ -181,7 +186,7 @@ export function ProjectCard({ project, onOpen, active }: ProjectCardProps) {
               href={project.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-soft transition-colors hover:text-white"
+              className="inline-flex items-center gap-1.5 text-soft transition-colors hover:text-ink"
             >
               <GitHub width={16} height={16} />
               {t.projects.code}

@@ -1,28 +1,46 @@
 @import "tailwindcss";
 
-/* Design tokens — same DNA as madapes-agency.com */
+/*
+ * Design tokens — Swiss / editorial direction (design-system/soufiane-portfolio/MASTER.md).
+ * Light base, one violet accent (Madapes brand), ink blocks for contrast.
+ * Components only use these tokens, so `.theme-dark` can rescope them locally.
+ */
 @theme {
-  --color-bg: #1c1a26;
-  --color-bg-light: #262433;
-  --color-card: rgb(255 255 255 / 0.06);
-  --color-card-strong: rgb(255 255 255 / 0.09);
-  --color-line: rgb(255 255 255 / 0.13);
+  --color-bg: #fafafa;
+  --color-bg-light: #ffffff;
+  --color-card: #ffffff;
+  --color-card-strong: #f4f4f5;
+  --color-line: #e4e4e7;
+  --color-ink: #09090b;
+  --color-soft: #3f3f46;
+  --color-muted: #71717a;
   --color-primary: #7c3aed;
-  --color-secondary: #a855f7;
-  --color-accent: #d7bdff;
-  --color-soft: #d1d1d8;
-  --color-muted: #a9a8b8;
+  --color-secondary: #6d28d9;
+  --color-accent: #6d28d9;
+  --color-tint: #f3eeff;
+  --color-on-primary: #ffffff;
+  /* Vibrant chapter palette (decorative, large type or on ink only) */
+  --color-fuchsia: #c026d3;
+  --color-pink: #ec4899;
+  --color-sky: #06b6d4;
+  --color-sun: #f59e0b;
+  --color-lime: #a3e635;
 
-  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --shadow-glow: 0 0 24px rgb(124 58 237 / 0.45);
-  --shadow-card: 0 20px 40px rgb(0 0 0 / 0.35);
+  --shadow-glow: 0 10px 28px rgb(9 9 11 / 0.14);
+  --shadow-card: 0 1px 2px rgb(9 9 11 / 0.04), 0 16px 36px rgb(9 9 11 / 0.08);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --animate-marquee: marquee 32s linear infinite;
   --animate-blink: blink 1s step-end infinite;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-blob: blob 18s ease-in-out infinite alternate;
+  --animate-bob: bob 6s ease-in-out infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-shimmer: shimmer 5s linear infinite;
   --animate-fade-in: fade-in 0.35s ease-out;
   --animate-keypress: keypress 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -55,6 +73,27 @@
       transform: translateX(-50%);
     }
   }
+  @keyframes blob {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(8%, -10%) scale(1.15);
+    }
+    100% {
+      transform: translate(-10%, 8%) scale(0.92);
+    }
+  }
+  @keyframes bob {
+    50% {
+      transform: translateY(-14px) rotate(var(--bob-rotate, 8deg));
+    }
+  }
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
   @keyframes blink {
     50% {
       opacity: 0;
@@ -65,88 +104,220 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
-    @apply bg-bg font-sans text-white antialiased;
+    @apply bg-bg font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   ::selection {
-    background: rgb(168 85 247 / 0.45);
+    background: rgb(124 58 237 / 0.25);
   }
   :focus-visible {
     @apply outline-2 outline-offset-4 outline-secondary;
+  }
+  button:not(:disabled),
+  label[for],
+  summary {
+    cursor: pointer;
   }
 }
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-[1180px] px-6;
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
   }
   .eyebrow {
-    @apply flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-accent uppercase;
+    @apply flex items-center gap-3 font-mono text-xs tracking-[0.16em] text-muted uppercase;
   }
   .eyebrow::before {
     content: "";
-    @apply h-px w-8 bg-secondary;
+    @apply size-2 bg-primary;
   }
-  .glass {
-    @apply rounded-[20px] border border-line bg-card backdrop-blur-md;
-  }
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  .panel {
+    @apply rounded-xl border border-line bg-card;
   }
   .chip {
-    @apply rounded-full border border-line bg-card-strong px-3 py-1 font-mono text-xs text-soft;
+    @apply rounded-md border border-line bg-card px-2.5 py-1 font-mono text-xs text-soft;
   }
+  /* Animated multi-colour gradient text */
+  .text-shimmer {
+    background: linear-gradient(90deg, #7c3aed, #c026d3, #db2777, #7c3aed) 0 center / 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    @apply animate-shimmer;
+  }
+  /* Soft colour light that drifts slowly behind a section */
+  .blob {
+    @apply pointer-events-none absolute rounded-full blur-[90px] animate-blob;
+  }
+  .chip-core {
+    @apply border-primary/30 bg-tint text-accent;
+  }
+}
+
+/* Alternate surface: white band framed by hairlines, to rhythm the page. */
+.section-alt {
+  background-color: var(--color-bg-light);
+  border-block: 1px solid var(--color-line);
 }
 
 /*
- * Light sections: the design tokens are CSS variables, so a section opts into
- * the light palette by redefining them locally — components need no variant.
- * (`--color-white` is the "ink" colour used for headings and active states.)
+ * Ink scope: redefines the tokens so any component renders on a dark block
+ * (code window, case study, contact) without a dedicated variant.
  */
-.theme-light {
-  --color-bg: #f6f4fb;
-  --color-bg-light: #ffffff;
-  --color-card: rgb(255 255 255 / 0.85);
-  --color-card-strong: #ffffff;
-  --color-line: rgb(20 20 26 / 0.1);
-  --color-white: #14141a;
-  --color-soft: #474755;
-  --color-muted: #6b6b7a;
-  --color-accent: #7c3aed;
-  --shadow-card: 0 20px 40px rgb(76 29 149 / 0.08);
+.theme-dark {
+  --color-bg: #09090b;
+  --color-bg-light: #18181b;
+  --color-card: #18181b;
+  --color-card-strong: #27272a;
+  --color-line: rgb(255 255 255 / 0.12);
+  --color-ink: #fafafa;
+  --color-soft: #d4d4d8;
+  --color-muted: #a1a1aa;
+  --color-secondary: #a78bfa;
+  --color-accent: #c4b5fd;
+  --color-tint: rgb(124 58 237 / 0.2);
+  --shadow-card: 0 20px 40px rgb(0 0 0 / 0.35);
   background-color: var(--color-bg);
-  color: var(--color-white);
-  color-scheme: light;
-  position: relative;
-  isolation: isolate;
-}
-
-/* Decorative dot grid behind light sections, fading at the top and bottom edges */
-.theme-light::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(rgb(124 58 237 / 0.3) 1.2px, transparent 1.7px);
-  background-size: 22px 22px;
-  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
+  color: var(--color-ink);
+  color-scheme: dark;
 }
 
 /* Reveal-on-scroll primitive (driven by <Reveal />) */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
+  filter: blur(6px);
   transition:
     opacity 0.8s var(--ease-out-expo),
-    transform 0.8s var(--ease-out-expo);
+    transform 0.8s var(--ease-out-expo),
+    filter 0.8s var(--ease-out-expo);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal[data-visible="true"] {
   opacity: 1;
   transform: none;
+  filter: none;
+}
+
+/* Chapter rule that draws itself from the left when its header is revealed */
+.rule-draw {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease-out-expo);
+}
+[data-visible="true"] > .rule-draw {
+  transform: none;
+}
+
+/* Primary button: the gradient slides on hover (colour shift feedback) */
+.btn-gradient {
+  background-image: linear-gradient(110deg, #7c3aed, #a21caf 50%, #7c3aed);
+  background-size: 200% 100%;
+  transition:
+    background-position 0.5s var(--ease-out-expo),
+    box-shadow 0.3s ease,
+    translate 0.3s var(--ease-out-expo);
+}
+.btn-gradient:hover {
+  background-position: 100% 0;
+  box-shadow: 0 12px 30px rgb(192 38 211 / 0.35);
+}
+
+/* Pointer parallax layer (usePointerParallax): `--depth` px of travel */
+.depth {
+  translate: calc(var(--mx, 0) * var(--depth, 20px)) calc(var(--my, 0) * var(--depth, 20px));
+}
+
+/* Hero recedes as it scrolls away (useScrollProgress, mode "pass") */
+.hero-exit {
+  opacity: calc(1 - var(--progress, 0) * 1.4);
+  transform: translateY(calc(var(--progress, 0) * -90px)) scale(calc(1 - var(--progress, 0) * 0.06));
+  transform-origin: top left;
+}
+
+/* Border light that follows the pointer (useSpotlight sets --sx / --sy) */
+.spotlight {
+  position: relative;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(
+    260px circle at var(--sx, -999px) var(--sy, -999px),
+    var(--spot, #ec4899),
+    transparent 65%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Bouncy letters: each letter of the first name pops on hover */
+.bounce-letter {
+  display: inline-block;
+  transition:
+    translate 0.45s cubic-bezier(0.34, 1.8, 0.64, 1),
+    color 0.2s ease,
+    rotate 0.45s cubic-bezier(0.34, 1.8, 0.64, 1);
+}
+.bounce-letter:hover {
+  translate: 0 -0.12em;
+  rotate: var(--r, -6deg);
+  color: var(--c, #ec4899);
+}
+
+/* Film grain: a faint noise texture over the page for depth */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Outlined giant text for the contact marquee */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(255 255 255 / 0.45);
+}
+
+/* 3D tilt (useTilt): rotation + glare come from spring-driven CSS variables */
+.tilt {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+}
+.tilt-glare {
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 50%),
+    rgb(255 255 255 / 0.5),
+    transparent 45%
+  );
+  opacity: calc(var(--go, 0) * 0.6);
+  mix-blend-mode: soft-light;
 }
 
 /* Split-text reveal (<SplitReveal />): words rise out of a clipping mask */
@@ -158,28 +329,12 @@
 }
 .split-inner {
   display: inline-block;
-  transform: translateY(105%) rotate(4deg);
-  transform-origin: left bottom;
-  transition: transform 0.9s var(--ease-out-expo);
+  transform: translateY(105%);
+  transition: transform 0.8s var(--ease-out-expo);
   transition-delay: calc(var(--i) * var(--stagger));
 }
 .split-reveal[data-visible="true"] .split-inner {
   transform: none;
-}
-
-/* 3D tilt (useTilt): rotation + glare come from spring-driven CSS variables */
-.tilt {
-  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transform-style: preserve-3d;
-}
-.tilt-glare {
-  background: radial-gradient(
-    420px circle at var(--gx, 50%) var(--gy, 50%),
-    rgb(255 255 255 / 0.35),
-    transparent 45%
-  );
-  opacity: calc(var(--go, 0) * 0.55);
-  mix-blend-mode: soft-light;
 }
 
 /* Dialog content cascade (<ProjectDialog />), after the image has landed */
@@ -191,9 +346,9 @@
 /* Scroll-driven cards (<ScrollScene />): local progress derived in CSS only */
 .scroll-card {
   --p: clamp(0, calc(var(--progress) * var(--count) - var(--i)), 1);
-  opacity: calc(0.25 + var(--p) * 0.75);
-  transform: translateY(calc((1 - var(--p)) * 32px)) scale(calc(0.92 + var(--p) * 0.08));
-  border-color: rgb(168 85 247 / calc(var(--p) * 0.6));
+  opacity: calc(0.3 + var(--p) * 0.7);
+  transform: translateY(calc((1 - var(--p)) * 32px));
+  border-color: rgb(124 58 237 / calc(var(--p) * 0.7));
 }
 
 /* Accessibility: honour the OS "reduce motion" setting everywhere */
@@ -208,8 +363,14 @@
   }
   .reveal,
   .scroll-card,
-  .split-inner {
+  .split-inner,
+  .rule-draw,
+  .hero-exit {
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+  .depth {
+    translate: none;
   }
 }
