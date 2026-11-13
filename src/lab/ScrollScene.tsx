@@ -16,15 +16,15 @@ export function ScrollScene() {
   return (
     <div ref={track} className="relative h-[170vh]" style={{ "--progress": 0, "--count": steps.length } as CSSProperties}>
       <div className="sticky top-0 flex h-screen items-center">
-        <div className="glass w-full p-8 md:p-12">
+        <div className="spotlight panel w-full bg-card/70 [--spot:#a3e635] p-6 backdrop-blur-sm md:p-12">
           <div className="mb-10">
-            <h3 className="text-xl font-semibold">{t.lab.scroll.title}</h3>
+            <h3 className="text-xl font-bold">{t.lab.scroll.title}</h3>
             <p className="mt-1 text-sm text-muted">{t.lab.scroll.hint}</p>
           </div>
 
-          <div className="h-1 overflow-hidden rounded-full bg-white/10">
+          <div className="h-1 overflow-hidden rounded-full bg-card-strong">
             <div
-              className="h-full origin-left rounded-full bg-gradient-to-r from-primary to-secondary"
+              className="h-full origin-left rounded-full bg-gradient-to-r from-primary via-pink to-sun"
               style={{ transform: "scaleX(var(--progress))" }}
             />
           </div>
@@ -33,11 +33,11 @@ export function ScrollScene() {
             {steps.map((step, index) => (
               <li
                 key={step}
-                className="scroll-card rounded-2xl border border-line bg-bg-light p-6"
+                className="scroll-card rounded-lg border border-line bg-bg-light p-6"
                 style={{ "--i": index } as CSSProperties}
               >
-                <span className="font-mono text-xs text-secondary">0{index + 1}</span>
-                <p className="mt-6 text-lg font-semibold">{step}</p>
+                <span className="font-mono text-xs text-accent">0{index + 1}</span>
+                <p className="mt-6 font-display text-lg font-bold">{step}</p>
               </li>
             ))}
           </ol>

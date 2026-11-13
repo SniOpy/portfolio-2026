@@ -1,15 +1,18 @@
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { useInView } from "../hooks/useInView";
 import { useTypeLoop } from "../hooks/useTypeLoop";
 
 /**
- * One colour per cycle: the name is typed in violet, erased, retyped in blue,
+ * One colour per cycle: the name is typed in violet, erased, retyped in fuchsia, then cyan,
  * and so on. Add entries here to extend the rotation.
  */
 const PALETTE = [
-  { text: "text-secondary", caret: "bg-secondary" },
-  { text: "text-sky-400", caret: "bg-sky-400" },
+  { text: "text-primary", caret: "bg-primary" },
+  { text: "text-fuchsia", caret: "bg-fuchsia" },
+  { text: "text-sky", caret: "bg-sky" },
 ] as const;
+
+const HOVER_COLORS = ["#7c3aed", "#ec4899", "#06b6d4", "#f59e0b", "#84cc16"];
 
 interface TypedNameProps {
   firstName: string;
@@ -32,7 +35,15 @@ export function TypedName({ firstName, lastName }: TypedNameProps) {
     <>
       <span className="sr-only">{`${firstName} ${lastName}`}</span>
       <span aria-hidden className="block">
-        {firstName}
+        {[...firstName].map((char, i) => (
+          <span
+            key={i}
+            className="bounce-letter"
+            style={{ "--c": HOVER_COLORS[i % HOVER_COLORS.length], "--r": `${i % 2 ? 6 : -6}deg` } as CSSProperties}
+          >
+            {char}
+          </span>
+        ))}
       </span>
       {/* min-height reserves the line so nothing below jumps while typing */}
       <span ref={ref} aria-hidden className="block min-h-[1.05em] whitespace-nowrap">

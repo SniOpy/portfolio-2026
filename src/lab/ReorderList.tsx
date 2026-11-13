@@ -114,8 +114,8 @@ export function ReorderList() {
           key={item.id}
           ref={register(item.id)}
           className={cn(
-            "relative flex items-center gap-3 rounded-xl border bg-bg-light px-3 py-3 text-sm",
-            draggingId === item.id ? "z-10 border-secondary shadow-glow" : "border-line",
+            "relative flex items-center gap-3 rounded-lg border bg-bg-light px-3 py-2 text-sm",
+            draggingId === item.id ? "z-10 border-primary shadow-glow" : "border-line",
           )}
         >
           <button
@@ -134,7 +134,7 @@ export function ReorderList() {
                 nudge(index, 1);
               }
             }}
-            className="grid size-7 shrink-0 cursor-grab touch-none place-items-center rounded-md text-muted hover:bg-white/5 hover:text-white active:cursor-grabbing"
+            className="grid size-10 shrink-0 cursor-grab touch-none place-items-center rounded-md text-muted hover:bg-card-strong hover:text-ink active:cursor-grabbing"
           >
             <svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden>
               {[2, 8, 14].flatMap((y) => [
@@ -143,7 +143,7 @@ export function ReorderList() {
               ])}
             </svg>
           </button>
-          <span className="font-mono text-xs text-secondary">{String(index + 1).padStart(2, "0")}</span>
+          <span className="font-mono text-xs text-accent">{String(index + 1).padStart(2, "0")}</span>
           <span className="flex-1">{item.label}</span>
           <span className="flex gap-1">
             <button
@@ -151,7 +151,7 @@ export function ReorderList() {
               onClick={() => nudge(index, -1)}
               disabled={index === 0}
               aria-label={`${t.lab.reorder.moveUp} : ${item.label}`}
-              className="rounded px-1.5 text-muted hover:text-white disabled:opacity-30"
+              className="grid size-10 place-items-center rounded-md text-muted hover:bg-card-strong hover:text-ink disabled:opacity-30"
             >
               ↑
             </button>
@@ -160,7 +160,7 @@ export function ReorderList() {
               onClick={() => nudge(index, 1)}
               disabled={index === items.length - 1}
               aria-label={`${t.lab.reorder.moveDown} : ${item.label}`}
-              className="rounded px-1.5 text-muted hover:text-white disabled:opacity-30"
+              className="grid size-10 place-items-center rounded-md text-muted hover:bg-card-strong hover:text-ink disabled:opacity-30"
             >
               ↓
             </button>
