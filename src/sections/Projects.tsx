@@ -3,7 +3,7 @@ import { ProjectCard } from "../components/ProjectCard";
 import { ProjectDialog } from "../components/ProjectDialog";
 import { Reveal } from "../components/Reveal";
 import { SectionHeader } from "../components/SectionHeader";
-import { projectsByStack as projects, type Project, type ProjectCategory } from "../data/projects";
+import { projects, type Project, type ProjectCategory } from "../data/projects";
 import { useFlip } from "../hooks/useFlip";
 import { useI18n } from "../i18n/context";
 import { cn } from "../lib/cn";

@@ -24,7 +24,7 @@ export const fr = {
     eyebrow: "Projets",
     title: "Des projets en production, pas des tutos.",
     intro:
-      "Classés selon ma stack principale (React, TypeScript, Node.js), qui ressort en violet. Ouvrez « Sous le capot » pour voir les choix techniques.",
+      "La stack principale (React, TypeScript, Node.js) ressort en violet. Ouvrez « Sous le capot » pour voir les choix techniques.",
     filters: { all: "Tous", front: "Front-end", fullstack: "Full stack" },
     tabs: { overview: "Aperçu", engine: "Sous le capot" },
     demo: "Démo",

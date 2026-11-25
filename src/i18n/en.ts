@@ -25,7 +25,7 @@ export const en: Dict = {
   projects: {
     eyebrow: "Projects",
     title: "Projects in production, not tutorials.",
-    intro: "Ranked by my core stack (React, TypeScript, Node.js), highlighted in violet. Open “Under the hood” to see the technical choices.",
+    intro: "The core stack (React, TypeScript, Node.js) is highlighted in violet. Open “Under the hood” to see the technical choices.",
     filters: { all: "All", front: "Front-end", fullstack: "Full stack" },
     tabs: { overview: "Overview", engine: "Under the hood" },
     demo: "Live demo",
