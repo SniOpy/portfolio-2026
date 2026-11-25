@@ -24,6 +24,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "tadara",
+    name: "Tadara",
+    year: "2026",
+    category: "fullstack",
+    accent: "#60a5fa",
+    image: "/projects/tadara.webp",
+    context: { fr: "Landing page · lettre offerte", en: "Landing page · free letter" },
+    summary: {
+      fr: "Landing page d'un abonnement de lettres pour enfants sur l'héritage de la civilisation arabo-musulmane. L'inscription envoie la lettre n°1 et, avec accord, les prochaines actualités.",
+      en: "Landing page for a kids' letter subscription about the heritage of Arab-Muslim civilisation. Signing up sends letter n°1 and, with consent, the upcoming news.",
+    },
+    engine: {
+      fr: [
+        "Landing React 19 et TypeScript, animée avec GSAP, Lenis et SplitType",
+        "API Express : inscriptions validées avec Zod et enregistrées dans PostgreSQL via Prisma",
+        "Lettre n°1 envoyée avec Brevo, et ajout à la liste d'actualités si le consentement est donné",
+        "Lien de désinscription signé, et nouvel envoi automatique si l'e-mail n'est pas parti",
+      ],
+      en: [
+        "React 19 and TypeScript landing, animated with GSAP, Lenis and SplitType",
+        "Express API: sign-ups validated with Zod and stored in PostgreSQL through Prisma",
+        "Letter n°1 sent with Brevo, and the address added to the news list when consent is given",
+        "Signed unsubscribe link, and an automatic retry when the email fails to send",
+      ],
+    },
+    stack: ["React", "TypeScript", "Express", "Prisma", "PostgreSQL", "Brevo"],
+    demo: "https://tadara.funooni.fr",
+  },
+  {
     id: "colourpig",
     name: "Colourpig",
     year: "2026",
@@ -53,34 +82,34 @@ export const projects: Project[] = [
     demo: "https://colourpig-preview.vercel.app/",
   },
   {
-    id: "tadara",
-    name: "Tadara",
+    id: "dabago",
+    name: "DabaGo",
     year: "2026",
     category: "fullstack",
-    accent: "#60a5fa",
-    image: "/projects/tadara.webp",
-    context: { fr: "Landing page · liste d'attente", en: "Landing page · waitlist" },
+    accent: "#e9b949",
+    image: "/projects/dabago.webp",
+    imagePosition: "center",
+    context: { fr: "Application de livraison · Maroc", en: "Delivery app · Morocco" },
     summary: {
-      fr: "Landing page d'un abonnement de lettres pour enfants sur l'héritage de la civilisation arabo-musulmane, avec inscription à la liste d'attente.",
-      en: "Landing page for a kids' monthly letter subscription about the heritage of Arab-Muslim civilisation, with a waitlist sign-up.",
+      fr: "Application de livraison entre particuliers et commerçants : les livreurs reçoivent des missions, suivent le trajet sur une carte et encaissent à la livraison.",
+      en: "Delivery app connecting individuals and merchants: couriers receive missions, follow the route on a map and collect payment on delivery.",
     },
     engine: {
       fr: [
-        "Monorepo : la landing React et l'API dans le même dépôt",
-        "Landing React stylée avec styled-components",
-        "API Express qui enregistre les inscriptions dans Supabase",
-        "E-mail de confirmation envoyé avec Nodemailer",
+        "Espace livreur : tableau de bord, missions pas à pas, historique et profil",
+        "Carte Leaflet / OpenStreetMap avec les points de retrait et de livraison",
+        "Calcul du montant à encaisser : produit, frais de livraison et frais de service",
+        "API Express + TypeScript + PostgreSQL : JWT, validation des entrées, limitation de débit",
       ],
       en: [
-        "Monorepo: the React landing and the API live in one repository",
-        "React landing styled with styled-components",
-        "Express API storing sign-ups in Supabase",
-        "Confirmation email sent with Nodemailer",
+        "Courier space: dashboard, step-by-step missions, history and profile",
+        "Leaflet / OpenStreetMap map with pickup and drop-off points",
+        "Amount-to-collect breakdown: product, delivery fee and service fee",
+        "Express + TypeScript + PostgreSQL API: JWT, input validation, rate limiting",
       ],
     },
-    stack: ["React", "styled-components", "Express", "Supabase"],
-    demo: "https://tadara-landing-sniopy-sniopys-projects.vercel.app/",
-    repo: "https://github.com/SniOpy/funooni",
+    stack: ["TypeScript", "Leaflet", "Express", "PostgreSQL", "JWT"],
+    repo: "https://github.com/SniOpy/sifta-backend",
   },
   {
     id: "odog",
@@ -173,36 +202,6 @@ export const projects: Project[] = [
     repo: "https://github.com/SniOpy/ecoTrend",
   },
   {
-    id: "dabago",
-    name: "DabaGo",
-    year: "2026",
-    category: "fullstack",
-    accent: "#e9b949",
-    image: "/projects/dabago.webp",
-    imagePosition: "center",
-    context: { fr: "Application de livraison · Maroc", en: "Delivery app · Morocco" },
-    summary: {
-      fr: "Application de livraison entre particuliers et commerçants : les livreurs reçoivent des missions, suivent le trajet sur une carte et encaissent à la livraison.",
-      en: "Delivery app connecting individuals and merchants: couriers receive missions, follow the route on a map and collect payment on delivery.",
-    },
-    engine: {
-      fr: [
-        "Espace livreur : tableau de bord, missions pas à pas, historique et profil",
-        "Carte Leaflet / OpenStreetMap avec les points de retrait et de livraison",
-        "Calcul du montant à encaisser : produit, frais de livraison et frais de service",
-        "API Express + TypeScript + PostgreSQL : JWT, validation des entrées, limitation de débit",
-      ],
-      en: [
-        "Courier space: dashboard, step-by-step missions, history and profile",
-        "Leaflet / OpenStreetMap map with pickup and drop-off points",
-        "Amount-to-collect breakdown: product, delivery fee and service fee",
-        "Express + TypeScript + PostgreSQL API: JWT, input validation, rate limiting",
-      ],
-    },
-    stack: ["TypeScript", "Leaflet", "Express", "PostgreSQL", "JWT"],
-    repo: "https://github.com/SniOpy/sifta-backend",
-  },
-  {
     id: "madapes",
     name: "Madapes Agency",
     year: "2026",
@@ -253,10 +252,7 @@ export const stack = [
   "GA4 / GTM",
 ] as const;
 
-/**
- * My core stack, weighted by how central it is to the roles I target.
- * Projects are ranked by how much of this stack they use.
- */
+/** Core stack, highlighted on project chips. Display order is the array above. */
 export const CORE_STACK: Readonly<Record<string, number>> = {
   React: 3,
   TypeScript: 3,
@@ -267,11 +263,3 @@ export const CORE_STACK: Readonly<Record<string, number>> = {
   "Tailwind CSS": 1,
   "Redux Toolkit": 1,
 };
-
-export const stackScore = (project: Project): number =>
-  project.stack.reduce((score, tech) => score + (CORE_STACK[tech] ?? 0), 0);
-
-/** Most core-stack-heavy first; ties go to the most recent project. */
-export const projectsByStack: Project[] = [...projects].sort(
-  (a, b) => stackScore(b) - stackScore(a) || Number(b.year) - Number(a.year),
-);
